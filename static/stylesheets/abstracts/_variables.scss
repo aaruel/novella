@@ -1,0 +1,75 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+/// Regular font family
+/// @type List
+$text-font-stack: 'Roboto', 'Open Sans', sans-serif !default;
+
+//  Number font family
+$number-font-stack: "Lato", "Open Sans", sans-serif;
+
+/// Code (monospace) font family
+/// @type List
+$code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Monaco', monospace !default;
+
+
+///Background color
+///@type Color
+$bg: rgb(255, 255, 255) !default;
+
+/// Copy text color
+/// @type Color
+$text-color: rgb(45, 45, 45) !default;
+
+/// Main brand color
+/// @type Color
+
+/// Accent color
+/// @type Color
+
+/// Light grey
+/// @type Color
+$light-grey: rgb(237, 237, 237) !default;
+$darker-light-grey: rgb(220, 220, 220) !default;
+
+/// Medium grey
+/// @type Color
+$mid-grey: rgb(153, 153, 153) !default;
+$darker-mid-grey: rgb(108, 108, 108) !default;
+
+/// Dark grey
+/// @type Color
+$dark-grey: rgb(68, 68, 68) !default;
+
+/// Button variables
+$sm: 24pt;
+$md: 32pt;
+$lg: 40pt;
+$xl: 48pt;
+
+/// Text sizes
+$tS: 0.8rem;
+$tM: 1.2rem;
+$tL: 1.6rem;
+$title: 2rem;
+$tXL: 3rem;
+
+/// Mobile sizes
+$mtM: 1.4rem;
+$mtL: 1.6rem;
+
+/// Breakpoints map
+/// @prop {String} keys - Keys are identifiers mapped to a given length
+/// @prop {Map} values - Values are actual breakpoints expressed in pixels
+$breakpoints: (
+  'sm': 767px,
+  'md': 992px,
+  'lg': 1200px
+) !default;
+
+/// Relative or absolute URL where all assets are served from
+/// @type String
+/// @example scss - When using a CDN
+///   $base-url: 'http://cdn.example.com/assets/';
+$base-url: '/assets/' !default;

@@ -1,0 +1,194 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto|Open+Sans|Lato);html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: border-box; }
+
+body {
+  line-height: 1; }
+
+button, button:hover, button:active, button:enabled {
+  border: none;
+  text-decoration: none;
+  margin: 0;
+  color: #ededed; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/**
+ * Set up a decent box model on the root element
+ */
+html {
+  font-family: "Roboto", "Open Sans", sans-serif;
+  box-sizing: border-box; }
+
+body {
+  background: white;
+  color: #2d2d2d;
+  line-height: 1.4; }
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+*, *::before, *::after {
+  box-sizing: inherit; }
+
+.title {
+  font-size: 2rem;
+  font-weight: bold; }
+
+h1 {
+  font-size: 1.6rem; }
+
+h2 {
+  font-size: 1.2rem; }
+
+h3 {
+  font-size: 0.8rem; }
+
+q {
+  font-style: italic; }
+
+a {
+  display: inline;
+  color: #a4c4f0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .2s ease; }
+  a:hover {
+    color: #85a4d0; }
+
+button:focus {
+  outline: 0; }
+
+hr {
+  border: none;
+  height: 3px;
+  width: 100%;
+  background: gainsboro; }
+
+i {
+  cursor: pointer; }
+  i > span {
+    margin-left: 4pt;
+    font-family: "Roboto", "Open Sans", sans-serif; }
+
+/**
+ * Basic typography style for copy text
+ */
+body {
+  color: #2d2d2d;
+  font: normal 125%/1.4 "Roboto", "Open Sans", sans-serif; }
+
+/**
+ * Clear inner floats
+ */
+.clearfix::after {
+  clear: both;
+  content: '';
+  display: table; }
+
+/**
+ * Main content containers
+ * 1. Make the container full-width with a maximum width
+ * 2. Center it in the viewport
+ * 3. Leave some space on the edges, especially valuable on small screens
+ */
+/**
+ * Hide text while making it readable for screen readers
+ * 1. Needed in WebKit-based browsers because of an implementation bug;
+ *    See: https://code.google.com/p/chromium/issues/detail?id=457146
+ */
+.hide-text {
+  overflow: hidden;
+  padding: 0;
+  /* 1 */
+  text-indent: 101%;
+  white-space: nowrap; }
+
+/**
+ * Hide element while making it readable for screen readers
+ * Shamelessly borrowed from HTML5Boilerplate:
+ * https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css#L119-L133
+ */
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+.row {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  min-width: 100%; }
+  .row .container {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0 0 8pt;
+    padding: 0; }
+    .row .container .panel {
+      width: 100%;
+      height: 100%;
+      border-radius: 3px;
+      overflow-y: auto; }
+  .row .half {
+    flex-basis: calc(50% - 16pt); }
+  .row .third {
+    flex-basis: calc(33% - 16pt); }
+  .row .quarter {
+    flex-basis: calc(25% - 16pt); }
+  @media (max-width: 1400px) {
+    .row .third, .row .quarter {
+      flex-basis: calc(50% - 16pt); }
+      .row .third:last-of-type, .row .quarter:last-of-type {
+        margin: 0 auto; } }
+  @media (max-width: 992px) {
+    .row .half, .row .third, .row .quarter {
+      flex-basis: 100%; } }
