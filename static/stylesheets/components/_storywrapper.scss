@@ -1,0 +1,45 @@
+.storyWrapper {
+  width: 800pt;
+  margin: 0 auto;
+  .storyDisplay {
+    height: 400pt;
+    overflow-y: auto;
+    .storyAuthor {
+      margin-bottom: 16pt;
+    }
+    .previewSen {
+      position: relative;
+      background: $light-grey;
+      &::before {
+        position: absolute;
+        top: -1.5em;
+        left: 0;
+        display: block;
+        content: 'Preview';
+        color: rgba($text-color, 0.5);
+        transition: opacity .25s ease-in;
+      }
+    }
+  }
+  .storyInput {
+    div {
+      display: flex;
+      flex-flow: row nowrap;
+      input {
+        display: block;
+        width: 100%;
+        height: $sm;
+        padding: 0.5em;
+      }
+      button {
+        margin-left: 0.25em;
+        padding: 0 8pt;
+        background: navy;
+        transition: all .1s ease-in;
+        &:hover {
+          background: rgba(navy, 0.5);
+        }
+      }
+    }
+  }
+}

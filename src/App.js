@@ -1,5 +1,7 @@
 import React from 'react';
 
+import StoryView from './components/StoryView.js';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +11,7 @@ class App extends React.Component {
   render() {
     return (
       <div >
-        Hello
+        <StoryView />
       </div>
     )
   }

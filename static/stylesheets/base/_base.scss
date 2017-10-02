@@ -13,7 +13,7 @@ html {
 body {
   background: $bg;
   color: $text-color;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /**
@@ -41,6 +41,10 @@ h3 {
 }
 q {
   font-style: italic;
+}
+
+b {
+  font-weight: bold;
 }
 
 a {
