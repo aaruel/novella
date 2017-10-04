@@ -46,6 +46,12 @@ q {
 b {
   font-weight: bold;
 }
+strong {
+  font-weight: bold;
+}
+em {
+  font-style: italic;
+}
 
 a {
   display: inline;
@@ -60,6 +66,7 @@ a {
 }
 
 button {
+  color: $bg;
   &:focus {
     outline:0;
   }
@@ -78,5 +85,23 @@ i {
   & > span {
     margin-left: 4pt;
     font-family: $text-font-stack;
+  }
+}
+
+code {
+  position: relative;
+  display: block;
+  padding: 0 4pt;
+  line-height: 1;
+  font-family: $code-font-stack;
+  word-spacing: -0.15em;
+  background: $brand-color;
+  color: $bg;
+  &::before {
+    //display: inline-block;
+    display: none;
+    margin: 1px 0.25em 0;
+    vertical-align: middle;
+    content: '#';
   }
 }

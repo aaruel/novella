@@ -2,6 +2,12 @@
   "name": "mz4250",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "webpack-dev-server --content-base build/",
+    "build": "webpack",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -22,10 +28,8 @@
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
   },
-  "scripts": {
-    "start": "webpack-dev-server --content-base build/",
-    "build": "webpack",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+  "dependencies": {
+    "react-markdown": "^2.5.0",
+    "react-marked": "^0.3.1"
   }
 }

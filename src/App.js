@@ -10,9 +10,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <div >
-        <StoryView />
-      </div>
+      [
+        <StoryView key="StoryView1"/>
+      ]
     )
   }
 }

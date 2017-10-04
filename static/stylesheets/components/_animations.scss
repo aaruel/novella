@@ -1,0 +1,18 @@
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+    box-shadow: none;
+    pointer-events: none;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(1px);
+    box-shadow: 0 0 0 1px $text-color;
+    pointer-events: auto;
+  }
+}
+
+.inTop {
+  animation: fadeInDown 0.5s forwards;
+}

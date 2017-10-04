@@ -1,0 +1,12 @@
+button {
+  background: $brand-color;
+  color: $bg;
+  transition: all .1s ease-in;
+  cursor: pointer;
+  &:hover {
+    background: lighten($brand-color, 5);
+  }
+  & > * {
+    color: $bg;
+  }
+}
