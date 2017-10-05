@@ -1,0 +1,107 @@
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
+
+/**
+ * Set up a decent box model on the root element
+ */
+html {
+  font-family: $text-font-stack;
+  box-sizing: border-box;
+}
+
+body {
+  background: $bg;
+  color: $text-color;
+  line-height: 1.5;
+}
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.title {
+  font-size: $title;
+  font-weight: bold;
+}
+h1 {
+  font-size: $tL;
+}
+h2 {
+  font-size: $tM;
+}
+h3 {
+  font-size: $tS;
+}
+q {
+  font-style: italic;
+}
+
+b {
+  font-weight: bold;
+}
+strong {
+  font-weight: bold;
+}
+em {
+  font-style: italic;
+}
+
+a {
+  display: inline;
+  color: #a4c4f0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .2s ease;
+
+  &:hover {
+    color: #85a4d0;
+  }
+}
+
+button {
+  color: $bg;
+  &:focus {
+    outline:0;
+  }
+}
+
+hr {
+  border: none;
+  height: 3px;
+  width: 100%;
+  background: $darker-light-grey;
+}
+
+i {
+  cursor: pointer;
+
+  & > span {
+    margin-left: 4pt;
+    font-family: $text-font-stack;
+  }
+}
+
+code {
+  position: relative;
+  display: block;
+  padding: 0 4pt;
+  line-height: 1;
+  font-family: $code-font-stack;
+  word-spacing: -0.15em;
+  background: $brand-color;
+  color: $bg;
+  &::before {
+    //display: inline-block;
+    display: none;
+    margin: 1px 0.25em 0;
+    vertical-align: middle;
+    content: '#';
+  }
+}

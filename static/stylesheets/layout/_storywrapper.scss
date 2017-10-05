@@ -1,0 +1,99 @@
+.storyWrapper {
+  width: 800pt;
+  margin: 16pt auto;
+  @media (max-width: 900pt) {
+    width: calc(100vw - 16pt);
+    margin: 8pt auto;
+  }
+  .storyAuthor {
+    margin-bottom: 16pt;
+  }
+  .storyDisplay {
+    height: 400pt;
+    padding: 8pt;
+    box-shadow: 0 0 0 1px $text-color;
+    overflow-y: auto;
+    @include screen('sm') {
+      height: 60vh;
+    }
+    .storySen {
+      position: relative;
+      word-break: normal;
+      &::after {
+        position: absolute;
+        top: 1.5em;
+        left: 0;
+        //display: block;
+        display: none;
+        //float: left;
+        opacity: 0;
+        min-width: 240pt;
+        padding: 4pt;
+        //background: $light-grey;
+        content: 'Submitted by ' attr(data-author) ' on ' attr(data-date);
+        text-align: center;
+        //color: $text-color;
+        transition: opacity .25s ease-in;
+        @include screen('sm') {
+          //temporary
+          display: none;
+          min-width: 120pt;
+          font-size: $tS;
+          padding: 4pt 2pt;
+          bottom: 2.5em;
+        }
+      }
+      &:hover {
+        &::after {
+          opacity: 1;
+        }
+      }
+      ol, ul {
+        li {
+          &::first-letter {
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+    .previewSen {
+      background: $light-grey;
+    }
+  }
+  .storyInput {
+    .mainInput {
+      display: flex;
+      flex-flow: row nowrap;
+      z-index: 1;
+      input {
+        display: block;
+        width: 100%;
+        //height: $md;
+        //line-height: $md;
+        font-size: $tM;
+        padding: 8pt;
+        box-shadow: 0 0 0 1px $text-color;
+        border: none;
+      }
+      button {
+        padding: 0 16pt;
+        font-size: $tM;
+        box-shadow: 0 0 0 1px $text-color;
+      }
+    }
+    .inputOptions {
+      font-size: $tM;
+      color: $bg;
+      opacity: 0;
+      z-index: -1;
+      button {
+        display: inline-block;
+        width: $md;
+        height: $md;
+        line-height: $md;
+        font-size: $tM;
+        box-shadow: 0 0 0 1px $text-color;
+      }
+    }
+  }
+}
