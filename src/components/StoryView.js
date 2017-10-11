@@ -1,6 +1,7 @@
+import { Sync, UsersModel, StoriesModel, SentencesModel } from '../../server.js';
+
 import React from 'react';
-// import marked from 'react-marked';
-const ReactMarkdown = require('react-markdown');
+import ReactMarkdown from 'react-markdown';
 
 import story_one from '../../data/story_one.data.js';
 import { formatSen } from "../Utils.js";
@@ -15,6 +16,7 @@ class StoryView extends React.Component {
     this.showOptions = this.showOptions.bind(this);
     this.showSentenceDetails = this.showSentenceDetails.bind(this);
     this.state = {
+      storyID: 1,
       previewSen: "",
       sentences: [],
       input: "",
@@ -24,7 +26,7 @@ class StoryView extends React.Component {
 
   componentWillMount() {
     this.setState({
-      sentences: story_one.sentences
+      sentences: SentencesModel.queryStorySentences(1)
     });
   }
 
@@ -49,21 +51,23 @@ class StoryView extends React.Component {
   }
 
   handleInputSubmit() {
-    const newSens = this.state.sentences;
-    const date = new Date();
-    const formatDate = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getFullYear()}`;
+    // const newSens = this.state.sentences;
+    // const date = new Date();
+    // const formatDate = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getFullYear()}`;
     let formatInput = formatSen(this.state.input);
 
-    newSens.push(
-      {
-        content: formatInput,
-        author: "Anonymous",
-        date: formatDate
-      }
-    );
+    // newSens.push(
+    //   {
+    //     content: formatInput,
+    //     author: "Anonymous",
+    //     date: formatDate
+    //   }
+    // );
+
+    SentencesModel.createSentence(formatInput, 1, 1);
 
     this.setState({
-      sentences: newSens,
+      sentences: SentencesModel.queryStorySentences(1),
       input: ""
     });
 
@@ -95,14 +99,14 @@ class StoryView extends React.Component {
         <h2 className="storyAuthor">By <b>{story_one.author}</b></h2>
         <h2 className="sentenceDetail">{this.state.previewSen}</h2>
         <div className="storyDisplay">
-          {this.state.sentences.map(
+          {Object.keys(this.state.sentences).map(
             (sentence, index) => (
               <ReactMarkdown
                 key={index}
                 className="storySen"
                 containerProps={{
-                  "data-author": sentence.author,
-                  "data-date": sentence.date,
+                  "data-author": sentence.userId.author,
+                  "data-date": sentence.storyId.date,
                 }}
                 containerTagName="span"
                 source={sentence.content + "&nbsp;"}
