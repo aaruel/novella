@@ -6,7 +6,7 @@ var HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
 });
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports={
-  entry: __dirname + '/src/index.js',
+  entry: ['whatwg-fetch', __dirname + '/src/index.js'],
   module:{
     rules:[
       {

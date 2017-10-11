@@ -1,5 +1,6 @@
 const express = require('express');
 const Sequelize = require('sequelize');
+const cors = require("cors");
 
 const db = new Sequelize('novella', 'root', 'password', {
   dialect: 'mysql'
@@ -79,32 +80,46 @@ SentencesModel = {
         storyId: SID
       }
     }).then(sentences => {
-      for (let sen in sentences.get({plain: true})) {
-        console.log(sen.content);
-      }
+      console.log(sentences);
     }).catch(err => {
       console.log(err);
     });
   }
 };
 
-Sync(true)
-  .then(() => {
-    console.log('synched');
-    UsersModel.createUser("Anonymous");
-    StoriesModel.createStory("Story of the Net");
-    SentencesModel.createSentence("This is the beginning of a great story", 1, 1);
-  })
-  .catch(e => {
-    console.log(e)
-  });
+Sync(false)
+.then(() => {
+  console.log('synched');
+  UsersModel.createUser("Anonymous");
+  StoriesModel.createStory("Story of the Net");
+  SentencesModel.createSentence("This is the beginning of a great story", 1, 1);
+})
+.catch(e => {
+  console.log(e)
+});
 
 const app = express();
 app.disable('x-powered-by');
+app.use(cors());
 
 app.use(express.static(__dirname + '/build'));
 app.listen(3000, () => {
   console.log('Server running on port 3000')
+});
+
+console.log(SentencesModel.queryStorySentences(1));
+
+app.get('/api/queryStorySentences', (req, res) => {
+console.log('Received GET request');
+  req.query ?
+    Sync(false)
+      .then(() => {
+        res.send(SentencesModel.queryStorySentences(req.query.sid))
+      })
+      .catch(e => {
+        console.log(e)
+      }) :
+    console.log('error');
 });
 
 module.exports = {

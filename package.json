@@ -12,6 +12,7 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-react": "^6.24.1",
+    "cors": "^2.8.4",
     "css-loader": "^0.28.7",
     "express": "^4.16.1",
     "extract-text-webpack-plugin": "^3.0.1",
@@ -31,6 +32,7 @@
   },
   "dependencies": {
     "react-markdown": "^2.5.0",
-    "react-marked": "^0.3.1"
+    "react-marked": "^0.3.1",
+    "whatwg-fetch": "^2.0.3"
   }
 }

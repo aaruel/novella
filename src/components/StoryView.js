@@ -1,7 +1,5 @@
-import { Sync, UsersModel, StoriesModel, SentencesModel } from '../../server.js';
-
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
+const ReactMarkdown = require('react-markdown');
 
 import story_one from '../../data/story_one.data.js';
 import { formatSen } from "../Utils.js";
@@ -24,10 +22,12 @@ class StoryView extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this.setState({
-      sentences: SentencesModel.queryStorySentences(1)
-    });
+  async componentWillMount() {
+    const sentences = await fetch(`http://localhost:3000/api/queryStorySentences?sid=${this.state.storyID}`);
+    console.log(await sentences.json());
+    // this.setState({
+    //   sentences: await sentences.json()
+    // });
   }
 
   handleInputChange() {
@@ -51,23 +51,21 @@ class StoryView extends React.Component {
   }
 
   handleInputSubmit() {
-    // const newSens = this.state.sentences;
-    // const date = new Date();
-    // const formatDate = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getFullYear()}`;
+    const newSens = this.state.sentences;
+    const date = new Date();
+    const formatDate = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getFullYear()}`;
     let formatInput = formatSen(this.state.input);
 
-    // newSens.push(
-    //   {
-    //     content: formatInput,
-    //     author: "Anonymous",
-    //     date: formatDate
-    //   }
-    // );
-
-    SentencesModel.createSentence(formatInput, 1, 1);
+    newSens.push(
+      {
+        content: formatInput,
+        author: "Anonymous",
+        date: formatDate
+      }
+    );
 
     this.setState({
-      sentences: SentencesModel.queryStorySentences(1),
+      sentences: newSens,
       input: ""
     });
 
@@ -104,10 +102,10 @@ class StoryView extends React.Component {
               <ReactMarkdown
                 key={index}
                 className="storySen"
-                containerProps={{
-                  "data-author": sentence.userId.author,
-                  "data-date": sentence.storyId.date,
-                }}
+                // containerProps={{
+                //   "data-author": sentence.author,
+                //   "data-date": sentence.date,
+                // }}
                 containerTagName="span"
                 source={sentence.content + "&nbsp;"}
                 disallowedTypes={["Paragraph"]}
