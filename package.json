@@ -33,6 +33,7 @@
   "dependencies": {
     "react-markdown": "^2.5.0",
     "react-marked": "^0.3.1",
+    "sequelize-cli": "^3.0.0",
     "whatwg-fetch": "^2.0.3"
   }
 }

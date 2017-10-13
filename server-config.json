@@ -1,0 +1,27 @@
+{
+  "development": {
+    "username": "root",
+    "password": "password",
+    "database": "novella_dev",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "password",
+    "database": "novella_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "password",
+    "database": "novella",
+    "host": "ec2-35-182-166-200.ca-central-1.compute.amazonaws.com:3000",
+    "dialect": "mysql",
+    "pool": {
+      "maxConnections": 8,
+      "maxIdleTime": 30
+    }
+  }
+}

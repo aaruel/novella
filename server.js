@@ -2,6 +2,9 @@ const express = require('express');
 const Sequelize = require('sequelize');
 const cors = require("cors");
 
+const env = process.env.NODE_ENV || 'development';
+const config = require(`${__dirname}/server-config.json`)[env];
+
 const app = express();
 app.disable('x-powered-by');
 app.use(cors());
@@ -11,9 +14,14 @@ app.listen(3000, () => {
   console.log('Server running on port 3000')
 });
 
-const db = new Sequelize('novella', 'root', 'password', {
-  dialect: 'mysql'
-});
+// const db = new Sequelize('novella', 'root', 'password', {
+//   dialect: 'mysql',
+//   pool: {
+//     maxConnections: 8,
+//     maxIdleTime: 30
+//   }
+// });
+const db = new Sequelize(config);
 
 const Sync = (force) => {
   return db.sync({

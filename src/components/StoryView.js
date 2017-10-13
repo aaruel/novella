@@ -3,7 +3,7 @@ const ReactMarkdown = require('react-markdown');
 
 import StoryLoading from './StoryLoading.js';
 import InputOptions from './InputOptions.js';
-import story_one from '../../data/story_one.data.js';
+import story_one from '../../seeders/story_one.data.js';
 import { formatSen } from "../Utils.js";
 
 class StoryView extends React.Component {
