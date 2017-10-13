@@ -9,7 +9,8 @@
     margin-bottom: 16pt;
   }
   .storyDisplay {
-    height: 400pt;
+    position: relative;
+    height: 360pt;
     padding: 8pt;
     box-shadow: 0 0 0 1px $text-color;
     overflow-y: auto;
@@ -62,14 +63,14 @@
   }
   .storyInput {
     .mainInput {
+      //display: flex;
       display: flex;
       flex-flow: row nowrap;
+      opacity: 0;
       z-index: 1;
       input {
         display: block;
         width: 100%;
-        //height: $md;
-        //line-height: $md;
         font-size: $tM;
         padding: 8pt;
         box-shadow: 0 0 0 1px $text-color;
@@ -82,10 +83,11 @@
       }
     }
     .inputOptions {
+      margin-top: 1px;
       font-size: $tM;
       color: $bg;
       opacity: 0;
-      z-index: -1;
+      box-shadow: 0 0 0 1px $text-color;
       button {
         display: inline-block;
         width: $md;

@@ -1,10 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto|Open+Sans|Lato);html, body, div, span, applet, object, iframe,
+@import url(https://fonts.googleapis.com/css?family=Roboto|Open+Sans|Lato);@import url(https://fonts.googleapis.com/css?family=Vollkorn);html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
-dl, dt, dd, ol, ul, li,
+dl, dt, dd,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
@@ -13,6 +13,13 @@ menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
   margin: 0;
   padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+ol, ul, li {
+  margin: 0;
   border: 0;
   font-size: 100%;
   font: inherit;
@@ -35,11 +42,7 @@ body {
 button, button:hover, button:active, button:enabled {
   border: none;
   text-decoration: none;
-  margin: 0;
-  color: #ededed; }
-
-ol, ul {
-  list-style: none; }
+  margin: 0; }
 
 blockquote, q {
   quotes: none; }
@@ -57,13 +60,13 @@ table {
  * Set up a decent box model on the root element
  */
 html {
-  font-family: "Roboto", "Open Sans", sans-serif;
+  font-family: "Vollkorn", "Lato", serif;
   box-sizing: border-box; }
 
 body {
   background: white;
   color: #2d2d2d;
-  line-height: 1.4; }
+  line-height: 1.5; }
 
 /**
  * Make all elements from the DOM inherit from the parent box-sizing
@@ -90,6 +93,15 @@ h3 {
 q {
   font-style: italic; }
 
+b {
+  font-weight: bold; }
+
+strong {
+  font-weight: bold; }
+
+em {
+  font-style: italic; }
+
 a {
   display: inline;
   color: #a4c4f0;
@@ -99,8 +111,10 @@ a {
   a:hover {
     color: #85a4d0; }
 
-button:focus {
-  outline: 0; }
+button {
+  color: white; }
+  button:focus {
+    outline: 0; }
 
 hr {
   border: none;
@@ -112,14 +126,29 @@ i {
   cursor: pointer; }
   i > span {
     margin-left: 4pt;
-    font-family: "Roboto", "Open Sans", sans-serif; }
+    font-family: "Vollkorn", "Lato", serif; }
+
+code {
+  position: relative;
+  display: block;
+  padding: 0 4pt;
+  line-height: 1;
+  font-family: "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Monaco", monospace;
+  word-spacing: -0.15em;
+  background: #408ad7;
+  color: white; }
+  code::before {
+    display: none;
+    margin: 1px 0.25em 0;
+    vertical-align: middle;
+    content: '#'; }
 
 /**
  * Basic typography style for copy text
  */
 body {
   color: #2d2d2d;
-  font: normal 125%/1.4 "Roboto", "Open Sans", sans-serif; }
+  font: normal 125%/1.4 "Vollkorn", "Lato", serif; }
 
 /**
  * Clear inner floats
@@ -192,3 +221,144 @@ body {
   @media (max-width: 992px) {
     .row .half, .row .third, .row .quarter {
       flex-basis: 100%; } }
+
+.storyWrapper {
+  width: 800pt;
+  margin: 16pt auto; }
+  @media (max-width: 900pt) {
+    .storyWrapper {
+      width: calc(100vw - 16pt);
+      margin: 8pt auto; } }
+  .storyWrapper .storyAuthor {
+    margin-bottom: 16pt; }
+  .storyWrapper .storyDisplay {
+    position: relative;
+    height: 360pt;
+    padding: 8pt;
+    box-shadow: 0 0 0 1px #2d2d2d;
+    overflow-y: auto; }
+    @media (max-width: 767px) {
+      .storyWrapper .storyDisplay {
+        height: 60vh; } }
+    .storyWrapper .storyDisplay .storySen {
+      position: relative;
+      word-break: normal; }
+      .storyWrapper .storyDisplay .storySen::after {
+        position: absolute;
+        top: 1.5em;
+        left: 0;
+        display: none;
+        opacity: 0;
+        min-width: 240pt;
+        padding: 4pt;
+        content: "Submitted by " attr(data-author) " on " attr(data-date);
+        text-align: center;
+        transition: opacity .25s ease-in; }
+        @media (max-width: 767px) {
+          .storyWrapper .storyDisplay .storySen::after {
+            display: none;
+            min-width: 120pt;
+            font-size: 0.8rem;
+            padding: 4pt 2pt;
+            bottom: 2.5em; } }
+      .storyWrapper .storyDisplay .storySen:hover::after {
+        opacity: 1; }
+      .storyWrapper .storyDisplay .storySen ol li::first-letter, .storyWrapper .storyDisplay .storySen ul li::first-letter {
+        text-transform: capitalize; }
+    .storyWrapper .storyDisplay .previewSen {
+      background: #ededed; }
+  .storyWrapper .storyInput .mainInput {
+    display: flex;
+    flex-flow: row nowrap;
+    opacity: 0;
+    z-index: 1; }
+    .storyWrapper .storyInput .mainInput input {
+      display: block;
+      width: 100%;
+      font-size: 1.2rem;
+      padding: 8pt;
+      box-shadow: 0 0 0 1px #2d2d2d;
+      border: none; }
+    .storyWrapper .storyInput .mainInput button {
+      padding: 0 16pt;
+      font-size: 1.2rem;
+      box-shadow: 0 0 0 1px #2d2d2d; }
+  .storyWrapper .storyInput .inputOptions {
+    margin-top: 1px;
+    font-size: 1.2rem;
+    color: white;
+    opacity: 0;
+    box-shadow: 0 0 0 1px #2d2d2d; }
+    .storyWrapper .storyInput .inputOptions button {
+      display: inline-block;
+      width: 32pt;
+      height: 32pt;
+      line-height: 32pt;
+      font-size: 1.2rem;
+      box-shadow: 0 0 0 1px #2d2d2d; }
+
+button {
+  background: #408ad7;
+  color: white;
+  transition: all .1s ease-in;
+  cursor: pointer; }
+  button:hover {
+    background: #5597db; }
+  button > * {
+    color: white; }
+
+@keyframes fadeInDown {
+  0% {
+    transform: translate(0, -20px); }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+    pointer-events: auto; } }
+
+.inTop {
+  animation: fadeInDown 0.5s forwards; }
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #408ad7; }
+  .loading .centerLoader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    .loading .centerLoader h1 {
+      color: white;
+      margin-top: -24pt;
+      line-height: 1;
+      text-align: center; }
+  .loading svg {
+    width: 240pt;
+    height: 96pt;
+    margin: 0 auto; }
+  .loading #infinity-outline {
+    fill: transparent;
+    stroke-width: 4;
+    stroke: white;
+    stroke-dasharray: 2pt, 200pt;
+    stroke-dashoffset: 0;
+    animation: anim 2.5s linear infinite; }
+  .loading #infinity-bg {
+    fill: transparent;
+    stroke-width: 4;
+    stroke: white;
+    opacity: 0.2; }
+
+@keyframes anim {
+  12.5% {
+    stroke-dasharray: 28pt, 200pt;
+    stroke-dashoffset: -22pt; }
+  43.75% {
+    stroke-dasharray: 70pt, 200pt;
+    stroke-dashoffset: -70pt; }
+  100% {
+    stroke-dasharray: 2pt, 200pt;
+    stroke-dashoffset: -198pt; } }

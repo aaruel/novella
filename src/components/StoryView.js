@@ -1,33 +1,57 @@
 import React from 'react';
 const ReactMarkdown = require('react-markdown');
 
+import StoryLoading from './StoryLoading.js';
+import InputOptions from './InputOptions.js';
 import story_one from '../../data/story_one.data.js';
 import { formatSen } from "../Utils.js";
 
 class StoryView extends React.Component {
   constructor(props) {
     super(props);
+    this.fetchSentences = this.fetchSentences.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
     this.handleEnterSubmit = this.handleEnterSubmit.bind(this);
     this.formatInput = this.formatInput.bind(this);
-    this.showOptions = this.showOptions.bind(this);
     this.showSentenceDetails = this.showSentenceDetails.bind(this);
     this.state = {
       storyID: 1,
       previewSen: "",
-      sentences: [],
+      sentences: null,
       input: "",
       optionsVisible: false
     };
   }
 
-  async componentWillMount() {
-    const sentences = await fetch(`http://localhost:3000/api/queryStorySentences?sid=${this.state.storyID}`);
-    console.log(await sentences.json());
-    // this.setState({
-    //   sentences: await sentences.json()
-    // });
+  componentWillMount() {
+    this.fetchSentences();
+  }
+
+  async fetchSentences() {
+    let newSens = await fetch(`http://localhost:3000/api/queryStorySentences?sid=${this.state.storyID}`);
+    newSens = await newSens.json();
+
+    this.setState({
+      sentences: newSens
+    });
+  }
+
+  async handleInputSubmit() {
+    let newSen = await fetch(`http://localhost:3000/api/createSentence?cont=${this.state.input}&uid=1&sid=${this.state.storyID}`);
+    newSen = await newSen.json();
+
+    let currentSens = this.state.sentences;
+    currentSens.push(newSen);
+
+    this.setState({
+      sentences: currentSens,
+      input: ""
+    });
+
+    this.senInput.value = "";
+
+    this.fetchSentences();
   }
 
   handleInputChange() {
@@ -50,38 +74,10 @@ class StoryView extends React.Component {
     }
   }
 
-  handleInputSubmit() {
-    const newSens = this.state.sentences;
-    const date = new Date();
-    const formatDate = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getFullYear()}`;
-    let formatInput = formatSen(this.state.input);
-
-    newSens.push(
-      {
-        content: formatInput,
-        author: "Anonymous",
-        date: formatDate
-      }
-    );
-
-    this.setState({
-      sentences: newSens,
-      input: ""
-    });
-
-    this.senInput.value = "";
-  }
-
   handleEnterSubmit(e) {
-    if (e.key == 'Enter') {
+    if (e.key === 'Enter') {
       this.handleInputSubmit();
     }
-  }
-
-  showOptions(state) {
-    this.setState({
-      optionsVisible: state
-    });
   }
 
   showSentenceDetails(sen, hovered) {
@@ -91,31 +87,34 @@ class StoryView extends React.Component {
   }
 
   render() {
+    // console.log(this.state.sentences)
+
     return (
       <div className="storyWrapper">
         <h1 className="title">{story_one.title}</h1>
         <h2 className="storyAuthor">By <b>{story_one.author}</b></h2>
         <h2 className="sentenceDetail">{this.state.previewSen}</h2>
         <div className="storyDisplay">
-          {Object.keys(this.state.sentences).map(
-            (sentence, index) => (
-              <ReactMarkdown
-                key={index}
-                className="storySen"
-                // containerProps={{
-                //   "data-author": sentence.author,
-                //   "data-date": sentence.date,
-                // }}
-                containerTagName="span"
-                source={sentence.content + "&nbsp;"}
-                disallowedTypes={["Paragraph"]}
-                unwrapDisallowed={true} />
+          {!this.state.sentences ?
+            <StoryLoading/> :
+            this.state.sentences.map(
+              (sentence, index) => (
+                <ReactMarkdown
+                  key={index}
+                  className="storySen"
+                  // containerProps={{
+                  //   "data-author": sentence.author,
+                  //   "data-date": sentence.date,
+                  // }}
+                  containerTagName="span"
+                  source={formatSen(sentence.content) + "&nbsp;"}
+                  disallowedTypes={["Paragraph"]}
+                  unwrapDisallowed={true}/>
+              )
             )
-          )}
+          }
           <ReactMarkdown
-            containerProps={{
-              style: {display: this.state.input ? "inline" : "none"}
-            }}
+            containerProps={{style: {display: this.state.input ? "inline" : "none"}}}
             className="previewSen"
             containerTagName="span"
             source={this.state.input}
@@ -123,7 +122,7 @@ class StoryView extends React.Component {
             unwrapDisallowed={true} />
         </div>
         <div className="storyInput">
-          <div className="mainInput">
+          <div className={`mainInput${this.state.sentences ? " inTop" : ""}`}>
             <input
               type="text"
               onChange={this.handleInputChange}
@@ -132,21 +131,7 @@ class StoryView extends React.Component {
               ref={el => this.senInput = el}/>
             <button onClick={this.handleInputSubmit}>Submit</button>
           </div>
-          <div className={
-            `inputOptions${this.state.optionsVisible ? " inTop" : ""}`}>
-            <button onClick={() => this.formatInput("**", "**")}>
-              <i className="fa fa-bold"/>
-            </button>
-            <button onClick={() => this.formatInput("*", "*")}>
-              <i className="fa fa-italic"/>
-            </button>
-            <button onClick={() => this.formatInput("`", "`")}>
-              <i className="fa fa-code"/>
-            </button>
-            <button onClick={() => this.formatInput("[", "](* link *)")}>
-              <i className="fa fa-link"/>
-            </button>
-          </div>
+          <InputOptions visible={this.state.optionsVisible} format={this.formatInput} />
         </div>
       </div>
     )

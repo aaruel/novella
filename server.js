@@ -2,9 +2,24 @@ const express = require('express');
 const Sequelize = require('sequelize');
 const cors = require("cors");
 
+const app = express();
+app.disable('x-powered-by');
+app.use(cors());
+
+app.use(express.static(__dirname + '/build'));
+app.listen(3000, () => {
+  console.log('Server running on port 3000')
+});
+
 const db = new Sequelize('novella', 'root', 'password', {
   dialect: 'mysql'
 });
+
+const Sync = (force) => {
+  return db.sync({
+    force: force
+  });
+};
 
 const Stories = db.define('stories', {
   title: {
@@ -32,18 +47,15 @@ Sentences.belongsTo(Users);
 Stories.hasMany(Sentences);
 Users.hasMany(Sentences);
 
-const Sync = (force) => {
-  return db.sync({
-    force: force
-  });
-};
-
 UsersModel = {
-  createUser: (username) => {
+  createUser: (username, response=null) => {
     Users.create({
       username: username
     }).then(user => {
       console.log("User created: " + user.get({plain: true}).username);
+      if (response) {
+        response.send(user.get({plain: true}));
+      }
     }).catch(err => {
       console.log("Unable to create user:\n" + err);
     });
@@ -51,11 +63,14 @@ UsersModel = {
 };
 
 StoriesModel = {
-  createStory: (title) => {
+  createStory: (title, response=null) => {
     Stories.create({
       title: title
     }).then(story => {
       console.log("Story created: " + story.get({plain: true}).title);
+      if (response) {
+        response.send(story.get({plain: true}));
+      }
     }).catch(err => {
       console.log("Unable to create story:\n" + err);
     });
@@ -63,63 +78,67 @@ StoriesModel = {
 };
 
 SentencesModel = {
-  createSentence: (content, UID, SID) => {
+  createSentence: (content, UID, SID, response=null) => {
     Sentences.create({
       content: content,
       userId: UID,
       storyId: SID
     }).then(sen => {
       console.log("Sentence created: " + sen.get({plain: true}).content);
+      if (response) {
+        response.send(sen.get({plain: true}));
+      }
     }).catch(err => {
-      console.log("Unable to create user:\n" + err);
+      console.log("Unable to create sentence:\n" + err);
     });
   },
-  queryStorySentences: (SID) => {
+  queryStorySentences: (response, SID) => {
     Sentences.findAll({
       where: {
         storyId: SID
       }
     }).then(sentences => {
-      console.log(sentences);
+      const senObjects = [];
+      sentences.map(sen => {
+        senObjects.push(sen.get({plain: true}))
+      });
+      response.send(senObjects);
     }).catch(err => {
       console.log(err);
+      response.json({status: -1, errors: ['Unable to fetch sentence', err]});
     });
   }
 };
 
-Sync(false)
-.then(() => {
-  console.log('synched');
-  UsersModel.createUser("Anonymous");
-  StoriesModel.createStory("Story of the Net");
-  SentencesModel.createSentence("This is the beginning of a great story", 1, 1);
-})
-.catch(e => {
-  console.log(e)
+app.get('/api/initialize', (req, res) => {
+  console.log('Starting initialization');
+
+  Sync(true)
+    .then(() => {
+      console.log('synched');
+      UsersModel.createUser("Anonymous");
+      StoriesModel.createStory("Story of the Net");
+      SentencesModel.createSentence("This is the beginning of a great story", 1, 1);
+    })
+    .catch(e => {
+      console.log(e)
+    });
+
+  console.log('DB initialized');
 });
-
-const app = express();
-app.disable('x-powered-by');
-app.use(cors());
-
-app.use(express.static(__dirname + '/build'));
-app.listen(3000, () => {
-  console.log('Server running on port 3000')
-});
-
-console.log(SentencesModel.queryStorySentences(1));
 
 app.get('/api/queryStorySentences', (req, res) => {
-console.log('Received GET request');
+  console.log("Querying sentences...");
   req.query ?
-    Sync(false)
-      .then(() => {
-        res.send(SentencesModel.queryStorySentences(req.query.sid))
-      })
-      .catch(e => {
-        console.log(e)
-      }) :
-    console.log('error');
+    SentencesModel.queryStorySentences(res, req.query.sid) :
+    console.log("Cannot get sentences: request query missing.");
+});
+
+app.get('/api/createSentence', (req, res) => {
+  console.log("Creating sentence...");
+  req.query ?
+    SentencesModel.createSentence(req.query.cont, req.query.uid, req.query.sid, res) :
+    console.log("Cannot create sentences: request query missing.");
 });
 
 module.exports = {

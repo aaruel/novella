@@ -1,18 +1,75 @@
 @keyframes fadeInDown {
   0% {
-    opacity: 0;
-    transform: translateY(-20px);
-    box-shadow: none;
-    pointer-events: none;
+    transform: translate(0, -20px);
   }
   100% {
+    transform: translate(0, 0);
     opacity: 1;
-    transform: translateY(1px);
-    box-shadow: 0 0 0 1px $text-color;
     pointer-events: auto;
   }
 }
 
 .inTop {
   animation: fadeInDown 0.5s forwards;
+}
+
+.loading {
+  $len: 200pt;
+  $time: 2.5s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $brand-color;
+
+  .centerLoader {
+    //background: red;
+    @include abs-center;
+    //width: 160pt;
+    //text-align: center;
+    h1 {
+      color: $bg;
+      margin-top: -24pt;
+      line-height: 1;
+      text-align: center;
+    }
+  }
+
+  svg {
+    width: 240pt;
+    height: 96pt;
+    margin: 0 auto;
+  }
+
+  #infinity-outline {
+    fill: transparent;
+    stroke-width: 4;
+    //stroke: #582a6b;
+    stroke: $bg;
+    stroke-dasharray: $len*0.01, $len;
+    stroke-dashoffset: 0;
+    animation: anim $time linear infinite;
+  }
+  #infinity-bg {
+    fill: transparent;
+    stroke-width: 4;
+    //stroke: #424242;
+    stroke: $bg;
+    opacity: 0.2;
+  }
+  @keyframes anim {
+    12.5% {
+      stroke-dasharray: $len*0.14, $len;
+      stroke-dashoffset: -$len*0.11;
+    }
+    43.75% {
+      stroke-dasharray: $len*0.35, $len;
+      stroke-dashoffset: -$len*0.35;
+    }
+    100% {
+      stroke-dasharray: $len*0.01, $len;
+      stroke-dashoffset: -$len*0.99;
+    }
+  }
 }
