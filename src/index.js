@@ -1,4 +1,4 @@
-const style = require('../static/stylesheets/main.scss');
+const style = require('../src/stylesheets/main.scss');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
