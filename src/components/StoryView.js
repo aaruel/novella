@@ -1,6 +1,9 @@
 import React from 'react';
 const ReactMarkdown = require('react-markdown');
 
+const URL = process.env.SERVER === 'production' ?
+  'ec2-35-182-166-200.ca-central-1.compute.amazonaws.com' : 'localhost';
+
 import StoryLoading from './StoryLoading.js';
 import InputOptions from './InputOptions.js';
 import story_one from '../../seeders/story_one.data.js';

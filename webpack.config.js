@@ -1,12 +1,17 @@
-var HTMLWebpackPlugin = require('html-webpack-plugin');
-var HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
+// const BabiliPlugin = require('babili-webpack-plugin');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
+const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
   template:__dirname + '/index.html',
   filename:'index.html',
   inject:'body'
 });
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports={
-  entry: ['whatwg-fetch', __dirname + '/src/index.js'],
+  entry: [
+    'whatwg-fetch',
+    'babel-polyfill',
+    __dirname + '/src/index.js'
+  ],
   module:{
     rules:[
       {
@@ -17,7 +22,7 @@ module.exports={
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract({
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'postcss-loader', 'sass-loader']
         })
@@ -29,7 +34,7 @@ module.exports={
     path: __dirname + '/build'
   },
   plugins:[
-    new ExtractTextPlugin("./main.css"),
+    new ExtractTextPlugin("main.css"),
     require('autoprefixer'),
     HTMLWebpackPluginConfig
   ]
