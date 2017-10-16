@@ -16,8 +16,22 @@ module.exports = {
   output:{
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
-    publicPath: '/build/'
+    publicPath: '/'
   },
+  plugins:[
+    new ExtractTextPlugin("main.css"),
+    require('autoprefixer'),
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+      inject: 'body'
+    }),
+    new BabiliPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
+  ],
   module:{
     rules:[
       {
@@ -28,6 +42,7 @@ module.exports = {
         query: {
           presets: [
             'env',
+            'es2017',
             'react',
             'stage-1'
           ],
@@ -43,16 +58,5 @@ module.exports = {
         })
       }
     ]
-  },
-  plugins:[
-    new ExtractTextPlugin("main.css"),
-    require('autoprefixer'),
-    new HtmlWebpackPlugin(),
-    new BabiliPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    })
-  ]
+  }
 };

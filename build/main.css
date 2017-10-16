@@ -193,13 +193,25 @@ body {
 
 .row {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   min-width: 100%; }
   .row .container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-flow: column nowrap;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
     margin: 0 0 8pt;
     padding: 0; }
     .row .container .panel {
@@ -208,19 +220,24 @@ body {
       border-radius: 3px;
       overflow-y: auto; }
   .row .half {
-    flex-basis: calc(50% - 16pt); }
+    -ms-flex-preferred-size: calc(50% - 16pt);
+        flex-basis: calc(50% - 16pt); }
   .row .third {
-    flex-basis: calc(33% - 16pt); }
+    -ms-flex-preferred-size: calc(33% - 16pt);
+        flex-basis: calc(33% - 16pt); }
   .row .quarter {
-    flex-basis: calc(25% - 16pt); }
+    -ms-flex-preferred-size: calc(25% - 16pt);
+        flex-basis: calc(25% - 16pt); }
   @media (max-width: 1400px) {
     .row .third, .row .quarter {
-      flex-basis: calc(50% - 16pt); }
+      -ms-flex-preferred-size: calc(50% - 16pt);
+          flex-basis: calc(50% - 16pt); }
       .row .third:last-of-type, .row .quarter:last-of-type {
         margin: 0 auto; } }
   @media (max-width: 992px) {
     .row .half, .row .third, .row .quarter {
-      flex-basis: 100%; } }
+      -ms-flex-preferred-size: 100%;
+          flex-basis: 100%; } }
 
 .storyWrapper {
   width: 800pt;
@@ -268,8 +285,13 @@ body {
     .storyWrapper .storyDisplay .previewSen {
       background: #ededed; }
   .storyWrapper .storyInput .mainInput {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-flow: row nowrap;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
     opacity: 0;
     z-index: 1; }
     .storyWrapper .storyInput .mainInput input {
@@ -307,16 +329,29 @@ button {
   button > * {
     color: white; }
 
+@-webkit-keyframes fadeInDown {
+  0% {
+    -webkit-transform: translate(0, -20px);
+            transform: translate(0, -20px); }
+  100% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    opacity: 1;
+    pointer-events: auto; } }
+
 @keyframes fadeInDown {
   0% {
-    transform: translate(0, -20px); }
+    -webkit-transform: translate(0, -20px);
+            transform: translate(0, -20px); }
   100% {
-    transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
     opacity: 1;
     pointer-events: auto; } }
 
 .inTop {
-  animation: fadeInDown 0.5s forwards; }
+  -webkit-animation: fadeInDown 0.5s forwards;
+          animation: fadeInDown 0.5s forwards; }
 
 .loading {
   position: absolute;
@@ -329,7 +364,8 @@ button {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); }
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); }
     .loading .centerLoader h1 {
       color: white;
       margin-top: -24pt;
@@ -345,12 +381,24 @@ button {
     stroke: white;
     stroke-dasharray: 2pt, 200pt;
     stroke-dashoffset: 0;
-    animation: anim 2.5s linear infinite; }
+    -webkit-animation: anim 2.5s linear infinite;
+            animation: anim 2.5s linear infinite; }
   .loading #infinity-bg {
     fill: transparent;
     stroke-width: 4;
     stroke: white;
     opacity: 0.2; }
+
+@-webkit-keyframes anim {
+  12.5% {
+    stroke-dasharray: 28pt, 200pt;
+    stroke-dashoffset: -22pt; }
+  43.75% {
+    stroke-dasharray: 70pt, 200pt;
+    stroke-dashoffset: -70pt; }
+  100% {
+    stroke-dasharray: 2pt, 200pt;
+    stroke-dashoffset: -198pt; } }
 
 @keyframes anim {
   12.5% {

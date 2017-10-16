@@ -1,4 +1,4 @@
-const style = require('../src/stylesheets/main.scss');
+import style from '../src/stylesheets/main.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -7,5 +7,5 @@ import App from './App';
 
 ReactDOM.render(
   <App />,
-  document.getElementById('root')
+  document.querySelector("#root")
 );
