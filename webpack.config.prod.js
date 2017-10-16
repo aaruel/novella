@@ -51,7 +51,7 @@ module.exports = {
     new BabiliPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        'SERVER': JSON.stringify('production')
+        'NODE_ENV': JSON.stringify('production')
       }
     })
   ]
