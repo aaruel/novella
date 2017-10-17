@@ -1,3 +1,4 @@
+const helmet = require('helmet');
 const express = require('express');
 const Sequelize = require('sequelize');
 const cors = require("cors");
@@ -7,6 +8,7 @@ const config = require(`${__dirname}/server-config.json`)[env];
 
 const app = express();
 app.disable('x-powered-by');
+app.use(helmet());
 app.use(cors());
 
 app.use(express.static(__dirname + '/build'));
@@ -14,13 +16,6 @@ app.listen(3000, () => {
   console.log('Server running on port 3000')
 });
 
-// const db = new Sequelize('novella', 'root', 'password', {
-//   dialect: 'mysql',
-//   pool: {
-//     maxConnections: 8,
-//     maxIdleTime: 30
-//   }
-// });
 const db = new Sequelize(config);
 
 const Sync = (force) => {

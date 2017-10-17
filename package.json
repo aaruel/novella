@@ -5,6 +5,7 @@
   "scripts": {
     "start": "webpack-dev-server --content-base build/ --hot",
     "build": "NODE_ENV=production webpack --progress --config webpack.config.prod.js",
+    "prod": "NODE_ENV=production node server.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "latest": "ncu -a && npm install"
@@ -39,13 +40,14 @@
     "webpack-dev-server": "^2.9.2"
   },
   "dependencies": {
-    "react-markdown": "^2.5.0",
-    "react-marked": "^0.3.1",
-    "sequelize-cli": "^3.0.0",
-    "whatwg-fetch": "^2.0.3",
+    "helmet": "^3.9.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-scripts": "1.0.14"
+    "react-markdown": "^2.5.0",
+    "react-marked": "^0.3.1",
+    "react-scripts": "1.0.14",
+    "sequelize-cli": "^3.0.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "browserslist": [
     "> 1%",

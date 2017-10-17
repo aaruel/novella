@@ -2,7 +2,7 @@ import React from 'react';
 const ReactMarkdown = require('react-markdown');
 
 const URL = process.env.NODE_ENV === 'production' ?
-  'ec2-35-182-166-200.ca-central-1.compute.amazonaws.com' : 'localhost';
+  'ec2-35-182-166-200.ca-central-1.compute.amazonaws.com:3306' : 'localhost:3000';
 
 import StoryLoading from './StoryLoading.js';
 import InputOptions from './InputOptions.js';
@@ -32,7 +32,7 @@ class StoryView extends React.Component {
   }
 
   async fetchSentences() {
-    let newSens = await fetch(`http://${URL}:3000/api/queryStorySentences?sid=${this.state.storyID}`);
+    let newSens = await fetch(`http://${URL}/api/queryStorySentences?sid=${this.state.storyID}`);
     newSens = await newSens.json();
 
     this.setState({
@@ -41,7 +41,7 @@ class StoryView extends React.Component {
   }
 
   async handleInputSubmit() {
-    let newSen = await fetch(`http://${URL}:3000/api/createSentence?cont=${this.state.input}&uid=1&sid=${this.state.storyID}`);
+    let newSen = await fetch(`http://${URL}/api/createSentence?cont=${this.state.input}&uid=1&sid=${this.state.storyID}`);
     newSen = await newSen.json();
 
     let currentSens = this.state.sentences;

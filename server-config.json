@@ -17,7 +17,8 @@
     "username": "root",
     "password": "password",
     "database": "novella",
-    "host": "ec2-35-182-166-200.ca-central-1.compute.amazonaws.com:3000",
+    "host": "awsdbinstance.cublze9fo3cu.ca-central-1.rds.amazonaws.com",
+    "port": "3306",
     "dialect": "mysql",
     "pool": {
       "maxConnections": 8,
