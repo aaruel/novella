@@ -87,21 +87,3 @@ i {
     font-family: $text-font-stack;
   }
 }
-
-code {
-  position: relative;
-  display: block;
-  padding: 0 4pt;
-  line-height: 1;
-  font-family: $code-font-stack;
-  word-spacing: -0.15em;
-  background: $brand-color;
-  color: $bg;
-  &::before {
-    //display: inline-block;
-    display: none;
-    margin: 1px 0.25em 0;
-    vertical-align: middle;
-    content: '#';
-  }
-}

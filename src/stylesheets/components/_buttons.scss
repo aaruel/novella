@@ -10,3 +10,10 @@ button {
     color: $bg;
   }
 }
+
+button[disabled] {
+  background: $warning-color;
+  i {
+    margin: 0 8pt;
+  }
+}

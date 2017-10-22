@@ -1,13 +1,15 @@
 import React from 'react';
-const ReactMarkdown = require('react-markdown');
+import io from 'socket.io-client/dist/socket.io';
 
+// const socket = io();
 const URL = process.env.NODE_ENV === 'production' ?
-  'ec2-35-182-166-200.ca-central-1.compute.amazonaws.com:3306' : 'localhost:3000';
+  'ec2-35-182-166-200.ca-central-1.compute.amazonaws.com' : 'localhost';
 
-import StoryLoading from './StoryLoading.js';
+const socket = io.connect(`http://${URL}:3000`);
+
+import story_one from '~/server/seeders/story_one.data.js';
+import StoryDisplay from './StoryDisplay.js';
 import InputOptions from './InputOptions.js';
-import story_one from '../../seeders/story_one.data.js';
-import { formatSen } from "../Utils.js";
 
 class StoryView extends React.Component {
   constructor(props) {
@@ -17,22 +19,32 @@ class StoryView extends React.Component {
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
     this.handleEnterSubmit = this.handleEnterSubmit.bind(this);
     this.formatInput = this.formatInput.bind(this);
-    this.showSentenceDetails = this.showSentenceDetails.bind(this);
     this.state = {
+      storyDetails: {},
       storyID: 1,
       previewSen: "",
       sentences: null,
-      input: "",
-      optionsVisible: false
+      input: ""
     };
   }
 
   componentWillMount() {
     this.fetchSentences();
+    socket.on('new sentence', () => {
+      console.log('new sentence');
+      this.fetchSentences();
+    });
+  }
+
+  componentDidMount() {
+    this.senInput.focus();
+    this.setState({
+      storyDetails: story_one
+    });
   }
 
   async fetchSentences() {
-    let newSens = await fetch(`http://${URL}/api/queryStorySentences?sid=${this.state.storyID}`);
+    let newSens = await fetch(`http://${URL}:3000/api/queryStorySentences?sid=${this.state.storyID}`);
     newSens = await newSens.json();
 
     this.setState({
@@ -41,26 +53,31 @@ class StoryView extends React.Component {
   }
 
   async handleInputSubmit() {
-    let newSen = await fetch(`http://${URL}/api/createSentence?cont=${this.state.input}&uid=1&sid=${this.state.storyID}`);
+    let newSen = await fetch(`http://${URL}:3000/api/createSentence?cont=${this.state.input}&uid=1&sid=${this.state.storyID}`);
     newSen = await newSen.json();
 
-    let currentSens = this.state.sentences;
-    currentSens.push(newSen);
+    if (newSen.status === -1) {
+      alert(newSen.error);
+    }
+    else {
+      let currentSens = this.state.sentences;
+      currentSens.push(newSen);
 
-    this.setState({
-      sentences: currentSens,
-      input: ""
-    });
+      this.setState({
+        sentences: currentSens,
+        input: ""
+      });
 
-    this.senInput.value = "";
+      this.senInput.value = "";
 
-    this.fetchSentences();
+      socket.emit('new sentence');
+      this.fetchSentences();
+    }
   }
 
   handleInputChange() {
     this.setState({
       input: this.senInput.value,
-      optionsVisible: this.senInput.value.length > 0
     });
   }
 
@@ -83,58 +100,32 @@ class StoryView extends React.Component {
     }
   }
 
-  showSentenceDetails(sen, hovered) {
-    hovered ?
-      this.setState({previewSen: `Submitted by ${sen.author} on ${sen.date}`}) :
-      this.setState({previewSen: ""});
-  }
-
   render() {
-    // console.log(this.state.sentences)
-
     return (
       <div className="storyWrapper">
-        <h1 className="title">{story_one.title}</h1>
-        <h2 className="storyAuthor">By <b>{story_one.author}</b></h2>
-        <h2 className="sentenceDetail">{this.state.previewSen}</h2>
-        <div className="storyDisplay">
-          {!this.state.sentences ?
-            <StoryLoading/> :
-            this.state.sentences.map(
-              (sentence, index) => (
-                <ReactMarkdown
-                  key={index}
-                  className="storySen"
-                  // containerProps={{
-                  //   "data-author": sentence.author,
-                  //   "data-date": sentence.date,
-                  // }}
-                  containerTagName="span"
-                  source={formatSen(sentence.content) + "&nbsp;"}
-                  disallowedTypes={["Paragraph"]}
-                  unwrapDisallowed={true}/>
-              )
-            )
-          }
-          <ReactMarkdown
-            containerProps={{style: {display: this.state.input ? "inline" : "none"}}}
-            className="previewSen"
-            containerTagName="span"
-            source={this.state.input}
-            disallowedTypes={["Paragraph", "HtmlBlock"]}
-            unwrapDisallowed={true} />
-        </div>
-        <div className="storyInput">
+        <h1 className="title">{this.state.storyDetails.title}</h1>
+        <h2 className="storyAuthor">
+          By <b>{this.state.storyDetails.author}</b>
+        </h2>
+        <StoryDisplay
+          key="STORYDISP"
+          sentences={this.state.sentences}
+          input={this.state.input} />
+        <div key="STORYIPT" className="storyInput">
           <div className={`mainInput${this.state.sentences ? " inTop" : ""}`}>
             <input
               type="text"
               onChange={this.handleInputChange}
               onKeyDown={this.handleEnterSubmit}
               placeholder="Write your sentence"
-              ref={el => this.senInput = el}/>
-            <button onClick={this.handleInputSubmit}>Submit</button>
+              ref={el => this.senInput = el}
+              required />
+            <button disabled={!this.state.input} onClick={this.handleInputSubmit}>
+              {this.state.input
+                ? "Submit" : <i className="fa fa-pencil" aria-hidden="true" ><span>...</span></i>}
+            </button>
           </div>
-          <InputOptions visible={this.state.optionsVisible} format={this.formatInput} />
+          <InputOptions visible={this.state.input} format={this.formatInput} />
         </div>
       </div>
     )

@@ -11,7 +11,8 @@ class App extends React.Component {
   render() {
     return (
       [
-        <StoryView key="StoryView1"/>
+        <StoryView key="SV1" />
+      //  load story voting area here
       ]
     )
   }

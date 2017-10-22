@@ -5,7 +5,11 @@
     "react",
     "stage-1"
   ],
-  "plugins": ["transform-decorators-legacy", "react-hot-loader/babel"],
+  "plugins": [
+    "transform-decorators-legacy",
+    "react-hot-loader/babel",
+    "babel-plugin-root-import"
+  ],
   "env": {
     "production": {
       "plugins": [

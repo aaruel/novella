@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const BabiliPlugin = require('babili-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
@@ -26,11 +27,13 @@ module.exports = {
       inject: 'body'
     }),
     new BabiliPlugin(),
+    new UglifyJSPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
       }
-    })
+    }),
+    new webpack.optimize.UglifyJsPlugin()
   ],
   module:{
     rules:[

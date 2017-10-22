@@ -24,16 +24,12 @@
         position: absolute;
         top: 1.5em;
         left: 0;
-        //display: block;
         display: none;
-        //float: left;
         opacity: 0;
         min-width: 240pt;
         padding: 4pt;
-        //background: $light-grey;
         content: 'Submitted by ' attr(data-author) ' on ' attr(data-date);
         text-align: center;
-        //color: $text-color;
         transition: opacity .25s ease-in;
         @include screen('sm') {
           //temporary
@@ -59,11 +55,15 @@
     }
     .previewSen {
       background: $light-grey;
+      opacity: 1;
+      transition: opacity .25s ease-in;
+      &:empty {
+        opacity: 0;
+      }
     }
   }
   .storyInput {
     .mainInput {
-      //display: flex;
       display: flex;
       flex-flow: row nowrap;
       opacity: 0;

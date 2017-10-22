@@ -1,0 +1,10 @@
+input[type=text] {
+  outline-width: 2px;
+  transition: outline .1s ease-in;
+  &:valid {
+    outline-color: lighten($brand-color, 2);
+  }
+  &:invalid {
+    outline-color: lighten($warning-color, 2);
+  }
+}
