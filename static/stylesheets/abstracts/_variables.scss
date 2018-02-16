@@ -4,7 +4,7 @@
 
 /// Regular font family
 /// @type List
-$text-font-stack: 'Vollkorn', 'Lato', serif !default;
+$text-font-stack: "Libre Baskerville", serif !default;
 
 //  Number font family
 $number-font-stack: "Lato", "Open Sans", sans-serif;
@@ -28,6 +28,7 @@ $brand-color: #408ad7;
 
 /// Accent color
 /// @type Color
+$accent: #c76c0c;
 
 /// Warning color
 /// @type Color

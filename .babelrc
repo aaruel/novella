@@ -1,24 +1,13 @@
 {
   "presets": [
-    "env",
-    "es2017",
-    "react",
-    "stage-1"
+    "@babel/preset-react",
+    "@babel/preset-env"
   ],
   "plugins": [
+    "@babel/plugin-proposal-object-rest-spread",
     "transform-decorators-legacy",
+    "transform-class-properties",
     "react-hot-loader/babel",
     "babel-plugin-root-import"
-  ],
-  "env": {
-    "production": {
-      "plugins": [
-        ["transform-react-remove-prop-types",
-          {
-            "ignoreFilenames": ["node_modules"]
-          }
-        ]
-      ]
-    }
-  }
+  ]
 }

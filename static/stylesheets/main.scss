@@ -1,6 +1,5 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css?family=Roboto|Open+Sans|Lato');
-@import url('https://fonts.googleapis.com/css?family=Vollkorn');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Lato|Libre+Baskerville');
 
 // 1. Configuration and helpers
 @import 'abstracts/variables',
@@ -25,7 +24,9 @@
 'layout/footer',
 'layout/content',
 'layout/grid',
-'layout/storywrapper';
+'layout/mainwrapper',
+'layout/storywrapper',
+'layout/votingwrapper';
 
 //---------------/
 // 5. Components /

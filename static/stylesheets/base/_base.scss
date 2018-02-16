@@ -87,3 +87,54 @@ i {
     font-family: $text-font-stack;
   }
 }
+
+blockquote{
+  display:block;
+  background: transparent;
+  padding: 8pt 16pt 8pt 2.5em;
+  margin: 0 0 8pt;
+  position: relative;
+
+  font-family: Georgia, serif;
+  font-size: $tM;
+  line-height: 1.2;
+  color: $text-color;
+  text-align: justify;
+
+  //border-left: 15px solid #c76c0c;
+  //border-right: 2px solid #c76c0c;
+
+  box-shadow: 2px 2px 15px #ccc;
+}
+
+blockquote::before{
+  content: "\201C"; /*Unicode for Left Double Quote*/
+
+  font-size: 2.5em;
+  font-weight: bold;
+  color: $mid-grey;
+
+  position: absolute;
+  left: 10px;
+  top:5px;
+}
+
+blockquote::after{
+  content: "";
+}
+
+blockquote a{
+  text-decoration: none;
+  background: #eee;
+  cursor: pointer;
+  padding: 0 3px;
+  color: #c76c0c;
+}
+
+blockquote a:hover{
+  color: #666;
+}
+
+blockquote em{
+  font-style: italic;
+}

@@ -1,11 +1,11 @@
 const story_one = {
   title: "Story of the Net",
-  author: "Rshig",
+  author: "RonV",
   sentences: [
     {
       content: "This is the beginning of a great story.",
       author: "Anonymous",
-      date: "10/2/2017"
+      date: new Date()
     }
   ]
 };

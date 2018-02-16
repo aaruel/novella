@@ -1,41 +1,51 @@
-// const BabiliPlugin = require('babili-webpack-plugin');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
-  template:__dirname + '/index.html',
-  filename:'index.html',
-  inject:'body'
-});
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-module.exports={
+const path = require('path');
+const webpack = require('webpack');
+
+const SRC = path.join(__dirname, 'src');
+
+module.exports = {
+  devtool: 'eval',
   entry: [
     'whatwg-fetch',
+    'react-hot-loader/patch',
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server',
     'babel-polyfill',
-    __dirname + '/src/index.js'
+    './src/index'
   ],
-  module:{
-    rules:[
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/static/'
+  },
+  module: {
+    loaders: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
+        test: /\.jsx?$/,
+        loaders: ['babel-loader'],
+        include: SRC
       },
       {
-        test: /\.scss$/,
+        test: /\.s?css$/,
         exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'postcss-loader', 'sass-loader']
-        })
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        loaders: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true
+            }
+          }
+        ],
+        include: SRC
       }
     ]
   },
-  output:{
-    filename: 'transformed.js',
-    path: __dirname + '/build'
-  },
-  plugins:[
-    new ExtractTextPlugin("main.css"),
-    require('autoprefixer'),
-    HTMLWebpackPluginConfig
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
   ]
 };

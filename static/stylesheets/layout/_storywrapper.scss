@@ -1,18 +1,25 @@
 .storyWrapper {
-  width: 800pt;
-  margin: 16pt auto;
-  @media (max-width: 900pt) {
+  flex: 1;
+  min-width: 400pt;
+  margin: 16pt 8pt;
+  @media (max-width: 832pt) {
+    flex: none;
     width: calc(100vw - 16pt);
     margin: 8pt auto;
   }
   .storyAuthor {
-    margin-bottom: 16pt;
+    b {
+      color: $accent;
+    }
   }
   .storyDisplay {
     position: relative;
     height: 360pt;
+    margin-top: 16pt;
     padding: 8pt;
     box-shadow: 0 0 0 1px $text-color;
+    //border: 1px solid $text-color;
+    border-bottom: none;
     overflow-y: auto;
     @include screen('sm') {
       height: 60vh;
@@ -20,6 +27,10 @@
     .storySen {
       position: relative;
       word-break: normal;
+      transition: color .2s ease-in-out;
+      &:not(:first-of-type) {
+        cursor: pointer;
+      }
       &::after {
         position: absolute;
         top: 1.5em;
@@ -41,6 +52,9 @@
         }
       }
       &:hover {
+        &:not(:first-of-type) {
+          color: $accent;
+        }
         &::after {
           opacity: 1;
         }
@@ -63,38 +77,55 @@
     }
   }
   .storyInput {
+    //margin-top: 4pt;
+    padding: 0;
+    opacity: 0;
     .mainInput {
       display: flex;
       flex-flow: row nowrap;
-      opacity: 0;
-      z-index: 1;
+      margin-right: -1px;
       input {
         display: block;
-        width: 100%;
-        font-size: $tM;
+        flex: 1;
         padding: 8pt;
-        box-shadow: 0 0 0 1px $text-color;
+        font-size: $tM;
+        box-shadow: 0 0 0 1px $brand-color;
+        //border: 1px solid $brand-color;
+        outline: none;
         border: none;
+        &:invalid {
+          box-shadow: 0 0 0 1px $warning-color;
+          //border: 1px solid $warning-color;
+        }
       }
       button {
+        //margin-right: -1px;
         padding: 0 16pt;
         font-size: $tM;
-        box-shadow: 0 0 0 1px $text-color;
+        box-shadow: 0 0 0 1px $brand-color;
+        //border: 1px solid $brand-color;
+        z-index: 0;
+        &[disabled] {
+          box-shadow: 0 0 0 1px $warning-color;
+          //border: 1px solid $warning-color;
+        }
       }
     }
     .inputOptions {
-      margin-top: 1px;
+      margin-top: 1pt;
       font-size: $tM;
       color: $bg;
-      opacity: 0;
-      box-shadow: 0 0 0 1px $text-color;
+      //box-shadow: 0 0 0 1px $text-color;
       button {
         display: inline-block;
         width: $md;
-        height: $md;
-        line-height: $md;
+        text-align: center;
+        padding: 8pt;
         font-size: $tM;
-        box-shadow: 0 0 0 1px $text-color;
+        box-shadow: 0 0 0 1px $brand-color;
+        &[disabled] {
+          box-shadow: 0 0 0 1px $warning-color;
+        }
       }
     }
   }

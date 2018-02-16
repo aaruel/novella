@@ -1,3 +1,7 @@
+.inTop {
+  animation: fadeInDown 0.5s forwards;
+}
+
 @keyframes fadeInDown {
   0% {
     transform: translate(0, -20px);
@@ -9,10 +13,6 @@
   }
 }
 
-.inTop {
-  animation: fadeInDown 0.5s forwards;
-}
-
 .loading {
   $len: 200pt;
   $time: 2.5s;
@@ -21,7 +21,9 @@
   left: 0;
   width: 100%;
   height: 100%;
+  line-height: 1;
   background: $brand-color;
+  pointer-events: none;
 
   .centerLoader {
     //background: red;
@@ -42,20 +44,22 @@
     margin: 0 auto;
   }
 
+  #infinity-outline, #infinity-bg {
+    stroke-width: 4;
+    stroke: $bg;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+
   #infinity-outline {
     fill: transparent;
-    stroke-width: 4;
-    //stroke: #582a6b;
-    stroke: $bg;
     stroke-dasharray: $len*0.01, $len;
     stroke-dashoffset: 0;
     animation: anim $time linear infinite;
   }
   #infinity-bg {
     fill: transparent;
-    stroke-width: 4;
-    //stroke: #424242;
-    stroke: $bg;
     opacity: 0.2;
   }
   @keyframes anim {
@@ -72,4 +76,18 @@
       stroke-dashoffset: -$len*0.99;
     }
   }
+
+  &.error {
+    background: #ff5a4d;
+  }
+}
+
+//.voted {
+//  animation: SentenceStarAnim 1s ease forwards;
+//}
+
+@keyframes SentenceStarAnim {
+  0%{background-position:0 50%}
+  100%{background-position:100% 50%}
+  //100%{background-position:0 50%}
 }

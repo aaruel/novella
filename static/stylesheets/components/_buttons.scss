@@ -1,6 +1,7 @@
 button {
   background: $brand-color;
   color: $bg;
+  border: none;
   transition: all .1s ease-in;
   cursor: pointer;
   &:hover {
@@ -9,11 +10,10 @@ button {
   & > * {
     color: $bg;
   }
-}
-
-button[disabled] {
-  background: $warning-color;
-  i {
-    margin: 0 8pt;
+  &[disabled] {
+    background: $warning-color;
+    &:hover {
+      background: lighten($warning-color, 5);
+    }
   }
 }

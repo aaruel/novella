@@ -1,0 +1,83 @@
+.votingWrapper {
+  width: 400pt;
+  margin: 16pt 8pt;
+  .title {
+    margin-left: 8pt;
+  }
+  .votingList {
+    position: relative;
+    height: 440pt;
+    padding: 8pt;
+    overflow-y: auto;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 96%,rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
+    .voteSen {
+      position: relative;
+      margin-bottom: 8pt;
+      //z-index: -1;
+      blockquote {
+        margin-right: 2em;
+        &, &::before, & > * {
+          transition: all .15s ease .25s;
+        }
+      }
+      .animateVoteSen {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 4pt;
+        background: $brand-color;
+        opacity: 0;
+        transition: all .5s ease;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .attribution {
+        margin-top: 0.5em;
+        color: $mid-grey;
+      }
+      .voteBtns {
+        position: absolute;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: flex-end;
+        right: 0;
+        bottom: 0;
+        width: 2em;
+        height: 100%;
+        z-index: 1;
+        i {
+          margin: 4pt;
+        }
+      }
+      &.voted {
+        blockquote {
+          box-shadow: inset 1px 1px 15px rgba($text-color, 0.25);
+        }
+        .voteBtn {
+          color: $brand-color;
+        }
+        .animateVoteSen {
+          width: 100%;
+          opacity: 1;
+        }
+      }
+    }
+  }
+  @media (max-width: 832pt) {
+    width: calc(100vw - 16pt);
+    margin: 8pt auto;
+  }
+  @include screen('sm') {
+    .votingList {
+      height: auto;
+    }
+    .voteSen {
+      blockquote {
+        font-size: $tS;
+      }
+    }
+  }
+}

@@ -1,11 +1,15 @@
-import style from '../src/stylesheets/main.scss';
-
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 
 import App from './App';
 
-ReactDOM.render(
+require('../static/stylesheets/main.scss');
+
+render(
   <App />,
-  document.querySelector("#root")
+  document.getElementById('root')
 );
+
+if (module.hot) {
+  module.hot.accept();
+}

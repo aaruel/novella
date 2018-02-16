@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import StoryLoading from './StoryLoading.js';
 import { formatSen } from "../Utils.js";
 
-class StoryDisplay extends React.Component {
+export default class StoryDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -14,7 +14,7 @@ class StoryDisplay extends React.Component {
     return (
       <div className="storyDisplay">
         {!this.props.sentences ?
-          <StoryLoading /> :
+          <StoryLoading error={this.props.error} /> :
           this.props.sentences.map(
             (sentence, index) => (
               <ReactMarkdown
@@ -22,20 +22,17 @@ class StoryDisplay extends React.Component {
                 className="storySen"
                 containerTagName="span"
                 source={formatSen(sentence.content) + "&nbsp;"}
-                disallowedTypes={["Paragraph"]}
-                unwrapDisallowed={true}/>
+                disallowedTypes={["paragraph"]}
+                unwrapDisallowed={true} />
             )
-          )
-        }
+          )}
         <ReactMarkdown
           className="previewSen"
           containerTagName="span"
           source={this.props.input}
-          disallowedTypes={["Paragraph", "HtmlBlock"]}
+          disallowedTypes={["paragraph"]}
           unwrapDisallowed={true} />
       </div>
     )
   }
 }
-
-export default StoryDisplay
